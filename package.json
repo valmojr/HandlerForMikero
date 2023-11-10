@@ -1,0 +1,33 @@
+{
+  "name": "handlerformikero",
+  "version": "0.0.1",
+  "description": "Node.js Script to handle the Packing of ARMA projects using Mikero Tools for helping the DevOps of projects that uses obfuscate feature",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "npx nodemon",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/valmojr/HandlerForMikero.git"
+  },
+  "keywords": [
+    "arma",
+    "mikero",
+    "node",
+    "npm",
+    "javascript"
+  ],
+  "author": "Valmo Trindade",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/valmojr/HandlerForMikero/issues"
+  },
+  "homepage": "https://github.com/valmojr/HandlerForMikero#readme",
+  "devDependencies": {
+    "@types/node": "^20.9.0",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}
