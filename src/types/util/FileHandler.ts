@@ -8,4 +8,6 @@ export function CheckAndAddToChangedAddons(changedAddons: string[],addonName: st
     if(!changedAddons.includes(addonName)) {
         changedAddons.push(addonName);
     }
+
+    return changedAddons;
 }
