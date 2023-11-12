@@ -5,6 +5,5 @@ runs:
   steps:
     - name: Install Mikero Tools for packing
       run: | 
-        npm install
-        npm run start
+        npm i && npm run build && npm start
       shell: pwsh
