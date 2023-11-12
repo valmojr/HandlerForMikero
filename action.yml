@@ -1,0 +1,10 @@
+name: Mikero Handler
+description: Uses Mikero Tools to pack PBOs based on the changed files
+runs:
+  using: composite
+  steps:
+    - name: Install Mikero Tools for packing
+      run: | 
+        npm install
+        npm run start
+      shell: pwsh
