@@ -4,6 +4,15 @@ import { CheckAndAddToChangedAddons, GetRootDir, ChangedAddonHandler } from "./f
 import run from "./functions/util/run";
 
 (async () => {
+    const rootDir = process.argv[2];
+
+    await run (`cd ${rootDir}`)
+
+    if (!rootDir) {
+        console.error("Root dir is not provided");
+        process.exit(1);
+    }
+
     const commitOnPull = await run("git rev-parse HEAD");
     const commitOnOrigin = (await run("git ls-remote origin -h refs/heads/main"))
         ?.replace("refs/heads/main", "")
