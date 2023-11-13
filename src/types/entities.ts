@@ -5,3 +5,8 @@ export type Addon = {
 }
 
 export type Data = Addon[];
+
+export type Builder = {
+    obfuscatedAddons: string[];
+    binarizedAddons: string[];
+}
