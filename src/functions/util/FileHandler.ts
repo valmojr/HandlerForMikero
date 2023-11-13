@@ -7,7 +7,7 @@ export function GetRootDir(file: string) {
 
 // Check if the addon is already in the changed addons array, if not, add it
 export function CheckAndAddToChangedAddons(changedAddons: string[],addonName: string) {
-    if(!changedAddons.includes(addonName)) {
+    if(changedAddons.includes(addonName)) {
         changedAddons.push(addonName);
     }
 
