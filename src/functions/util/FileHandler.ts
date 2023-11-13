@@ -1,4 +1,4 @@
-import { Data } from "../../types/entities";
+import { Builder, Data } from "../../types/entities";
 
 // separate only the root directory from the filepath
 export function GetRootDir(file: string) {
@@ -15,6 +15,26 @@ export function CheckAndAddToChangedAddons(changedAddons: string[],addonName: st
 }
 
 // return the addons from data that are on changedAddons
-export function ChangedAddonHandler(changedAddons: string[], data: Data) {
-    return data.filter((addon) => changedAddons.includes(addon.name));
+export function ChangedAddonHandler(changedAddons: string[], data: Builder | null) {
+    const allAddons: Data = [];
+
+    if (data) {
+        data.obfuscatedAddons.forEach((addon) => {
+            allAddons.push({
+                name: addon,
+                binarized: true,
+                obfuscated: true,
+            });
+        });
+
+        data.binarizedAddons.forEach((addon) => {
+            allAddons.push({
+                name: addon,
+                binarized: true,
+                obfuscated: false,
+            });
+        });
+    }
+
+    return allAddons.filter((addon) => changedAddons.includes(addon.name));
 }

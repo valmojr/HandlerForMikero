@@ -1,10 +1,16 @@
-import data from "./data/addons";
 import AddonPacker from "./functions/AddonPacker";
+import DataImporter from "./functions/DataImporter";
 import { CheckAndAddToChangedAddons, GetRootDir, ChangedAddonHandler } from "./functions/util/FileHandler";
 import run from "./functions/util/run";
 
 (async () => {
     const rootDir = process.argv[2];
+
+    const builderJson = process.argv[3];
+
+    let data = null;
+
+    if (builderJson) data = await DataImporter(builderJson);
 
     await run (`cd ${rootDir}`)
 
