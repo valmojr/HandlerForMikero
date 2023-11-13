@@ -1,5 +1,5 @@
 import data from "./data/addons";
-import AddonPacker from "./functions/addonPacker";
+import AddonPacker from "./functions/AddonPacker";
 import { CheckAndAddToChangedAddons, GetRootDir, ChangedAddonHandler } from "./functions/util/FileHandler";
 import run from "./functions/util/run";
 
