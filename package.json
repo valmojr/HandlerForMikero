@@ -9,7 +9,7 @@
     "lint": "eslint . --ext .ts",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
     "start": "npm run build && node build/index.js",
-    "test": "test"
+    "test": "npx jest --coverage --verbose --watch"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/valmojr/HandlerForMikero#readme",
   "devDependencies": {
+    "@babel/preset-env": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",
     "@jest/globals": "^29.7.0",
     "@types/jest": "^29.5.8",
