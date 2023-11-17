@@ -1,5 +1,5 @@
 import { Addon } from "../types/entities";
-import Logger from "./util/logger";
+import Logger from "./log/logger";
 import run from "./util/run";
 
 export default async function AddonPacker(changedAddons: Addon[]) {

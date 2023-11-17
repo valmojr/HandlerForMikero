@@ -1,7 +1,7 @@
 import AddonPacker from "./functions/AddonPacker";
 import DataImporter from "./functions/DataImporter";
 import { CheckAndAddToChangedAddons, GetRootDir, ChangedAddonHandler } from "./functions/util/FileHandler";
-import Logger from "./functions/util/logger";
+import Logger from "./functions/log/logger";
 import run from "./functions/util/run";
 
 export default async function Bootstrap (logger: Logger) {
