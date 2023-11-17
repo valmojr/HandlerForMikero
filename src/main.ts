@@ -16,8 +16,9 @@ export default async function Bootstrap (logger: Logger) {
     await run(`cd ${rootDir}`)
 
     if (!rootDir) {
-        logger.error("Root dir is not provided");
-        process.exit(1);
+        const rootDirError = new Error("Root dir not found");
+        logger.error(rootDirError);
+        throw rootDirError;
     }
 
     const commitOnPull = await run("git rev-parse HEAD");
