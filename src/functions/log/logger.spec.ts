@@ -1,22 +1,36 @@
+import Run from "../util/run";
 import Logger from "./logger";
+import fs from 'fs';
 
 describe('LOGGING TESTS', () => {
-    describe('Error Handling Tests', () => {
-        it('should throw Warning when running dev env and could not find the output file', () => {
-            expect(true).toBe(false);
-        });
-        it('should throw Warning when running prod env and could not find the output file', () => {
-            expect(true).toBe(false);
-        });
+    afterAll(() => {
+        //Run('rm -rf ./logs');
     });
 
     describe('File Printing Tests', () => {
-        process.env.log_dir = 'production';
+        it('should create the log file if not found', () => {
+            process.env.log_dir = 'development';
+            const logger = new Logger();
+            const tested = logger.log('Test log message');
+            const loggedFile = fs.readFileSync('@/logs/dev_logs.log', 'utf-8');
+
+            expect(tested).toBe(false);
+        });
         it('should print on the dev log when running dev env', () => {
-            expect(true).toBe(false);
+            process.env.log_dir = 'production';
+            const logger = new Logger();
+            const tested = logger.log('Test log message');
+            const loggedFile = fs.readFileSync('@/logs/dev_logs.log', 'utf-8');
+
+            expect(tested).toBe(false);
         });
         it('should print on the prod log when running prod env', () => {
-            expect(true).toBe(false);
+            process.env.log_dir = 'production';
+            const logger = new Logger();
+            const tested = logger.log('Test log message');
+            const loggedFile = fs.readFileSync('@/logs/prod_logs.log', 'utf-8');
+
+            expect(tested).toBe(false);
         })
     });
 
