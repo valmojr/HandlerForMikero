@@ -1,49 +1,56 @@
-import fs, { PathLike } from 'fs';
+import fs from 'fs';
+import path from 'path';
 
 export default class Logger {
-    private logFilePath: PathLike = process.env.log_dir == 'production' ? '@/logs/prod_logs.log' : '@/logs/dev_logs.log';
-    private timeStamp = new Date();
+  private filePath: string;
 
-    constructor(logFilePath?: PathLike) {
-      this.logFilePath = logFilePath || this.logFilePath;
+  constructor(filePath?: string) {
+    this.filePath = filePath || './logs/app.log';
+    this.initializeLogFile();
+  }
+
+  private initializeLogFile() {
+    const logsFolder = path.dirname(this.filePath);
+    if (!fs.existsSync(logsFolder))
+      fs.mkdirSync(logsFolder, { recursive: true });
+
+    if (!fs.existsSync(this.filePath))
+      fs.writeFileSync(this.filePath, '');
+  }
+
+  private async printOnLoggingFile(message: string) {
+    try {
+      await fs.promises.appendFile(this.filePath, `${message}\n`);
+    } catch (error) {
+      console.error(`Error writing to log file: ${error}`);
     }
+  }
 
-    public printOnLogFile = (message: string) => {
-      try {
-          (!fs.existsSync(this.logFilePath)) ?
-              fs.appendFileSync(this.logFilePath, `\n${message}`) :
-              fs.writeFileSync(this.logFilePath, `\n${message}`);
-        return true;
-      } catch (error) {
-        console.error(`Error printing log to ${this.logFilePath}: ${error}`);
-        return false;
-      }
-    };
+  private getTimestamp(): string {
+    return new Date().toISOString();
+  }
 
-    public log = (message: string) => {
-        const messageString = `\x1b[34m[${this.timeStamp.toLocaleString()}][LOG] ${message}\x1b[0m`;
-        console.log(messageString);
-        if (!this.printOnLogFile(messageString)) 
-            console.error(`Error printing log to ${this.logFilePath}`);
+  public log = (message: string) => {
+    const timestamp = this.getTimestamp();
+    const messageString = `\x1b[34m [${timestamp}][LOG] ${message}\x1b[0m`;
+    console.log(messageString);
+    this.printOnLoggingFile(`[${timestamp}][LOG] - ${message}`);
+    return messageString;
+  };
 
-        return messageString;
-    }
+  public warn = (message: string) => {
+    const timestamp = this.getTimestamp();
+    const messageString = `\x1b[33m [${timestamp}][WARN] ${message}\x1b[0m`;
+    console.warn(messageString);
+    this.printOnLoggingFile(`[${timestamp}][WARN] - ${message}`);
+    return messageString;
+  };
 
-    public warn = (message: string) => {
-        const messageString = `\x1b[33m[${this.timeStamp.toLocaleString()}][WARN] ${message}\x1b[0m`;
-        console.log(messageString);
-        if (!this.printOnLogFile(messageString)) 
-            console.error(`Error printing log to ${this.logFilePath}`);
-
-        return messageString;
-    }
-
-    public error = (message: Error | unknown | string) => {
-        const messageString = `\x1b[41m[${this.timeStamp.toLocaleString()}][ERROR] ${message}\x1b[0m`;
-        console.log(messageString);
-        if (!this.printOnLogFile(messageString)) 
-            console.error(`Error printing log to ${this.logFilePath}`);
-
-        return messageString;
-    }
+  public error = (message: Error | unknown | string) => {
+    const timestamp = this.getTimestamp();
+    const messageString = `\x1b[41m [${timestamp}][ERROR] ${message}\x1b[0m`;
+    console.error(messageString);
+    this.printOnLoggingFile(`[${timestamp}][ERROR] - ${message}`);
+    return messageString;
+  };
 }
